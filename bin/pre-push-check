@@ -1,0 +1,31 @@
+#!/bin/bash
+# Pre-push linting check script
+# This script runs the same checks as GitHub Actions CI
+
+set -e
+
+echo "🔍 Running RuboCop (same as GitHub Actions lint job)..."
+bin/rubocop -f github
+
+echo "✅ RuboCop passed!"
+
+echo ""
+echo "🔒 Running Brakeman security scan..."
+bin/brakeman --no-pager
+
+echo "✅ Brakeman passed!"
+
+echo ""
+echo "🔒 Running Bundler Audit..."
+bin/bundler-audit
+
+echo "✅ Bundler Audit passed!"
+
+echo ""
+echo "🧪 Running tests..."
+bin/rails db:test:prepare test
+
+echo "✅ All tests passed!"
+
+echo ""
+echo "🎉 All checks passed! Your code matches GitHub Actions requirements."

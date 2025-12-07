@@ -1,0 +1,75 @@
+{
+  // Enable format on save for all files
+  "editor.formatOnSave": true,
+  
+  // Ruby-specific settings
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.formatOnType": true
+  },
+  
+  // ERB template settings
+  "[erb]": {
+    "editor.defaultFormatter": "aliariff.vscode-erb-beautify",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  
+  // JavaScript settings
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  
+  // JSON settings
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  
+  // YAML settings
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  
+  // Ruby LSP settings
+  "rubyLsp.formatter": "rubocop",
+  "rubyLsp.enabledFeatures": {
+    "diagnostics": true,
+    "documentHighlights": true,
+    "documentLink": true,
+    "documentSymbols": true,
+    "foldingRanges": true,
+    "formatting": true,
+    "hover": true,
+    "inlayHint": true,
+    "onTypeFormatting": true,
+    "selectionRanges": true,
+    "semanticHighlighting": true,
+    "completion": true,
+    "codeActions": true,
+    "codeLens": true,
+    "definition": true,
+    "workspaceSymbol": true,
+    "signatureHelp": true,
+    "typeHierarchy": true
+  },
+  
+  // Auto-save settings (optional but recommended)
+  "files.autoSave": "onFocusChange",
+  
+  // Trim trailing whitespace on save
+  "files.trimTrailingWhitespace": true,
+  
+  // Insert final newline
+  "files.insertFinalNewline": true,
+  
+  // Trim final newlines
+  "files.trimFinalNewlines": true
+}
