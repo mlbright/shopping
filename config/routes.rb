@@ -24,13 +24,13 @@ Rails.application.routes.draw do
 
   # Shopping lists routes
   root "shopping_lists#index"
-  
+
   resources :shopping_lists do
     member do
       post :clone
       post :merge
     end
-    resources :shopping_items, only: [:create, :update, :destroy] do
+    resources :shopping_items, only: [ :create, :update, :destroy ] do
       member do
         patch :toggle_completed
         patch :defer
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :households, only: [:index, :show, :new, :create, :edit, :update] do
+  resources :households, only: [ :index, :show, :new, :create, :edit, :update ] do
     member do
       post :add_member
       delete :remove_member

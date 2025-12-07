@@ -1,6 +1,6 @@
 class HouseholdsController < ApplicationController
-  before_action :set_household, only: [:show, :edit, :update, :add_member, :remove_member]
-  before_action :verify_membership, only: [:show, :edit, :update, :add_member, :remove_member]
+  before_action :set_household, only: [ :show, :edit, :update, :add_member, :remove_member ]
+  before_action :verify_membership, only: [ :show, :edit, :update, :add_member, :remove_member ]
 
   def index
     @households = current_user.households.includes(:users, :shopping_lists)
@@ -39,7 +39,7 @@ class HouseholdsController < ApplicationController
 
   def add_member
     user = User.find_by(email: params[:email]&.downcase)
-    
+
     if user.nil?
       redirect_to @household, alert: "User with that email not found."
       return
@@ -63,7 +63,7 @@ class HouseholdsController < ApplicationController
         redirect_to @household, alert: "Cannot remove the last owner."
         return
       end
-      
+
       membership.destroy
       redirect_to @household, notice: "Member removed successfully!"
     else

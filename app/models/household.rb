@@ -5,7 +5,7 @@ class Household < ApplicationRecord
   has_many :shopping_lists, dependent: :destroy
 
   validates :name, presence: true
-  
+
   after_create :add_creator_as_owner
 
   private

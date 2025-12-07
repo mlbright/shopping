@@ -3,7 +3,7 @@ class ShoppingItem < ApplicationRecord
 
   validates :name, presence: true
   validates :state, inclusion: { in: %w[active completed deferred] }
-  
+
   before_create :set_position
 
   after_create_commit :broadcast_create

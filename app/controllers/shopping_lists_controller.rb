@@ -1,11 +1,11 @@
 class ShoppingListsController < ApplicationController
-  before_action :set_shopping_list, only: [:show, :edit, :update, :destroy, :clone, :merge]
-  before_action :verify_access, only: [:show, :edit, :update, :destroy, :clone, :merge]
+  before_action :set_shopping_list, only: [ :show, :edit, :update, :destroy, :clone, :merge ]
+  before_action :verify_access, only: [ :show, :edit, :update, :destroy, :clone, :merge ]
 
   def index
     # Get all shopping lists from all user's households, sorted by most recently updated
     @shopping_lists = current_user.households
-                                  .includes(shopping_lists: [:shopping_items, :creator])
+                                  .includes(shopping_lists: [ :shopping_items, :creator ])
                                   .flat_map(&:shopping_lists)
                                   .sort_by(&:updated_at)
                                   .reverse
@@ -55,7 +55,7 @@ class ShoppingListsController < ApplicationController
   # Clone a shopping list with all or only deferred items
   def clone
     include_completed = params[:include_completed] == "true"
-    
+
     new_list = @shopping_list.household.shopping_lists.create!(
       name: "#{@shopping_list.name} (Copy)",
       creator: current_user
@@ -81,7 +81,7 @@ class ShoppingListsController < ApplicationController
   # Merge another shopping list into this one
   def merge
     source_list = ShoppingList.find(params[:source_list_id])
-    
+
     # Verify user has access to source list
     unless current_user.households.include?(source_list.household)
       redirect_to @shopping_list, alert: "You don't have access to that list."

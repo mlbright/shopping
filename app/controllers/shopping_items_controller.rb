@@ -1,11 +1,11 @@
 class ShoppingItemsController < ApplicationController
   before_action :set_shopping_list
   before_action :verify_access
-  before_action :set_shopping_item, only: [:update, :destroy, :toggle_completed, :defer, :update_position]
+  before_action :set_shopping_item, only: [ :update, :destroy, :toggle_completed, :defer, :update_position ]
 
   def create
     @shopping_item = @shopping_list.shopping_items.build(shopping_item_params)
-    
+
     if @shopping_item.save
       respond_to do |format|
         format.html { redirect_to @shopping_list }
@@ -44,7 +44,7 @@ class ShoppingItemsController < ApplicationController
   def toggle_completed
     new_state = @shopping_item.completed? ? "active" : "completed"
     @shopping_item.update(state: new_state)
-    
+
     respond_to do |format|
       format.html { redirect_to @shopping_list }
       format.turbo_stream
@@ -53,7 +53,7 @@ class ShoppingItemsController < ApplicationController
 
   def defer
     @shopping_item.update(state: "deferred")
-    
+
     respond_to do |format|
       format.html { redirect_to @shopping_list }
       format.turbo_stream
@@ -62,7 +62,7 @@ class ShoppingItemsController < ApplicationController
 
   def update_position
     @shopping_item.update(position: params[:position])
-    
+
     respond_to do |format|
       format.html { redirect_to @shopping_list }
       format.turbo_stream

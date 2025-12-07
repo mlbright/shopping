@@ -8,7 +8,7 @@ class CreateShoppingItems < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    
-    add_index :shopping_items, [:shopping_list_id, :position]
+
+    add_index :shopping_items, [ :shopping_list_id, :position ]
   end
 end
