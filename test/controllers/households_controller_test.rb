@@ -1,33 +1,41 @@
 require "test_helper"
 
 class HouseholdsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = users(:one)
+    @household = households(:one)
+    log_in_as @user
+  end
+
   test "should get index" do
-    get households_index_url
+    get households_path
     assert_response :success
   end
 
   test "should get show" do
-    get households_show_url
+    get household_path(@household)
     assert_response :success
   end
 
   test "should get new" do
-    get households_new_url
+    get new_household_path
     assert_response :success
   end
 
-  test "should get create" do
-    get households_create_url
-    assert_response :success
+  test "should create household" do
+    assert_difference("Household.count", 1) do
+      post households_path, params: { household: { name: "New Household" } }
+    end
+    assert_redirected_to household_path(Household.last)
   end
 
   test "should get edit" do
-    get households_edit_url
+    get edit_household_path(@household)
     assert_response :success
   end
 
-  test "should get update" do
-    get households_update_url
-    assert_response :success
+  test "should update household" do
+    patch household_path(@household), params: { household: { name: "Updated Household" } }
+    assert_redirected_to household_path(@household)
   end
 end

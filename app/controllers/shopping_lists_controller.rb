@@ -49,7 +49,7 @@ class ShoppingListsController < ApplicationController
 
   def destroy
     @shopping_list.destroy
-    redirect_to root_path, notice: "Shopping list deleted successfully!"
+    redirect_to shopping_lists_path, notice: "Shopping list deleted successfully!"
   end
 
   # Clone a shopping list with all or only deferred items

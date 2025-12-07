@@ -13,7 +13,6 @@ class User < ApplicationRecord
   private
 
   def create_personal_household
-    household = households.create!(name: "Personal", creator: self)
-    household.household_memberships.find_by(user: self)&.update(role: "owner")
+    created_households.create!(name: "Personal")
   end
 end

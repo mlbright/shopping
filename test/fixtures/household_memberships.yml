@@ -3,9 +3,9 @@
 one:
   user: one
   household: one
-  role: MyString
+  role: owner
 
 two:
   user: two
   household: two
-  role: MyString
+  role: owner

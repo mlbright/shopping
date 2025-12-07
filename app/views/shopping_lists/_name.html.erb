@@ -1,0 +1,8 @@
+<div class="px-6 py-4 border-b border-gray-200" id="shopping_list_<%= shopping_list.id %>_name">
+  <h1 class="text-2xl font-semibold text-gray-900"><%= shopping_list.name %></h1>
+  <p class="text-sm text-gray-500 mt-1">
+    <%= shopping_list.household.name %> • 
+    Created by <%= shopping_list.creator.email %> • 
+    <%= time_ago_in_words(shopping_list.updated_at) %> ago
+  </p>
+</div>

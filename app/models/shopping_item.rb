@@ -1,4 +1,6 @@
 class ShoppingItem < ApplicationRecord
+  include ActionView::RecordIdentifier
+  
   belongs_to :shopping_list
 
   validates :name, presence: true
