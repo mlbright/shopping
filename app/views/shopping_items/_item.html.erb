@@ -1,0 +1,53 @@
+<div id="<%= dom_id(item) %>" 
+     class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0 group"
+     data-controller="draggable"
+     data-draggable-url-value="<%= update_position_shopping_list_shopping_item_path(item.shopping_list, item) %>">
+  
+  <div class="flex items-center flex-1 space-x-3">
+    <!-- Checkbox for completed state -->
+    <%= form_with model: [item.shopping_list, item], 
+                  url: toggle_completed_shopping_list_shopping_item_path(item.shopping_list, item),
+                  method: :patch,
+                  class: "flex items-center" do |f| %>
+      <%= f.check_box :completed, 
+          checked: item.completed?,
+          class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer",
+          data: { action: "change->form#submit" },
+          onchange: "this.form.requestSubmit()" %>
+    <% end %>
+    
+    <!-- Item name with state styling -->
+    <span class="flex-1 text-sm <%= item.completed? ? 'line-through text-gray-400' : 'text-gray-900' %> <%= item.deferred? ? 'border-l-4 border-yellow-400 pl-3' : '' %>">
+      <%= item.name %>
+    </span>
+  </div>
+
+  <!-- Actions (visible on hover) -->
+  <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+    <% unless item.deferred? %>
+      <%= button_to defer_shopping_list_shopping_item_path(item.shopping_list, item),
+          method: :patch,
+          class: "text-yellow-600 hover:text-yellow-900 text-xs font-medium px-2 py-1 rounded hover:bg-yellow-50",
+          title: "Defer" do %>
+        Defer
+      <% end %>
+    <% end %>
+    
+    <%= button_to shopping_list_shopping_item_path(item.shopping_list, item),
+        method: :delete,
+        data: { turbo_confirm: "Are you sure?" },
+        class: "text-red-600 hover:text-red-900",
+        title: "Delete" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+      </svg>
+    <% end %>
+
+    <!-- Drag handle -->
+    <button type="button" class="cursor-move text-gray-400 hover:text-gray-600" data-draggable-target="handle">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+      </svg>
+    </button>
+  </div>
+</div>

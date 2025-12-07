@@ -1,0 +1,70 @@
+<%= turbo_stream_from @shopping_list %>
+
+<div class="max-w-3xl mx-auto py-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <%= link_to root_path, class: "text-gray-600 hover:text-gray-900" do %>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+    <% end %>
+    
+    <div class="flex space-x-3">
+      <%= link_to "Edit", edit_shopping_list_path(@shopping_list), class: "text-sm text-gray-700 hover:text-gray-900" %>
+      <%= link_to "Clone", "#", data: { action: "click->modal#openClone" }, class: "text-sm text-gray-700 hover:text-gray-900" %>
+      <%= link_to "Merge", "#", data: { action: "click->modal#openMerge" }, class: "text-sm text-gray-700 hover:text-gray-900" %>
+      <%= button_to "Delete", shopping_list_path(@shopping_list), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "text-sm text-red-600 hover:text-red-900" %>
+    </div>
+  </div>
+
+  <!-- List Card -->
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <!-- List Title -->
+    <div class="px-6 py-4 border-b border-gray-200" id="shopping_list_<%= @shopping_list.id %>_name">
+      <h1 class="text-2xl font-semibold text-gray-900"><%= @shopping_list.name %></h1>
+      <p class="text-sm text-gray-500 mt-1">
+        <%= @shopping_list.household.name %> • 
+        Created by <%= @shopping_list.creator.email %> • 
+        <%= time_ago_in_words(@shopping_list.updated_at) %> ago
+      </p>
+    </div>
+
+    <!-- Items List -->
+    <div class="px-6 py-4" id="shopping_items">
+      <% @shopping_items.each do |item| %>
+        <%= render "shopping_items/item", item: item %>
+      <% end %>
+    </div>
+
+    <!-- Bottom Expandable Input (Google Keep style) -->
+    <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+      <%= form_with model: [@shopping_list, @shopping_list.shopping_items.build], 
+                    id: "new_item_form",
+                    data: { controller: "expandable-input" },
+                    class: "space-y-3" do |f| %>
+        
+        <div data-expandable-input-target="container" class="transition-all duration-200">
+          <%= f.text_field :name, 
+              placeholder: "Take a note...",
+              class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+              data: { 
+                expandable_input_target: "input",
+                action: "focus->expandable-input#expand blur->expandable-input#maybeCollapse"
+              } %>
+          
+          <div data-expandable-input-target="actions" class="hidden flex justify-between items-center pt-2">
+            <div class="flex space-x-2">
+              <%= f.submit "Add Item", class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium" %>
+              <%= f.button "Defer", type: "button", class: "px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 text-sm font-medium", data: { action: "click->expandable-input#addDeferred" } %>
+            </div>
+            <button type="button" data-action="click->expandable-input#collapse" class="text-gray-500 hover:text-gray-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="max-w-7xl mx-auto py-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-gray-900">Households</h1>
+    <%= link_to "New Household", new_household_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700" %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @households.each do |household| %>
+      <div class="bg-white shadow rounded-lg p-6">
+        <%= link_to household_path(household), class: "block" do %>
+          <h3 class="text-lg font-medium text-gray-900 mb-2"><%= household.name %></h3>
+          <p class="text-sm text-gray-600">
+            <%= pluralize(household.users.count, "member") %>
+          </p>
+          <p class="text-sm text-gray-600">
+            <%= pluralize(household.shopping_lists.count, "list") %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
